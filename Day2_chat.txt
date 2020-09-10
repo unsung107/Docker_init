@@ -1,0 +1,257 @@
+마소캠퍼스 TA님이 모두에게:  06:58 PM
+1
+10월 8일까지 진행 됩니다~!
+소리 설정은 PC스피커와 웨비나 스피커를 동일하게!
+기본채팅 설정은 받는 사람을 "모든 토론자와 참석자"로 부탁드립니다
+
+10분이상 응답이 없을 경우 손들기 기능을 이용해주세요
+문제 발생시 실습화면 캡쳐 후
+qna@masocampus.com 으로 문의주세요!
+Masocampus MM님이 모두에게:  06:59 PM
+https://www.masocampus.com/ssg-docker101/
+docker821
+https://forms.gle/7A9dp96J9be4T1Ay7
+
+마소캠퍼스 TA님이 모두에게:  07:02 PM
+현재 소리조정 중입니다! 잠시만 기다려주세요:)
+교재 사이트입니다~
+https://www.masocampus.com/ssg-docker101
+비밀번호: docker821
+교재 및 1일차 강사님 노트가 올라와있으니 다운받아주세요:)
+마소캠퍼스 TA님이 모두에게:  07:11 PM
+https://aws.amazon.com/ko/microservices
+Masocampus MM님이 모두에게:  07:18 PM
+http://blog.dreamfactory.com/microservices-examples
+마소캠퍼스 TA님이 모두에게:  07:23 PM
+https://woowabros.github.io/experience/2018/03/13/k8s-test.html
+https://woowabros.github.io/r&d/2017/06/13/apigateway.html
+Masocampus MM님이 모두에게:  07:26 PM
+https://engineering.linecorp.com/ko/blog/building-large-kubernetes-cluster/
+마소캠퍼스 TA님이 모두에게:  07:50 PM
+이미지 복사→컨테이너 생성, 이미지 다운시 이미지 복사본으로 처리
+[도커의 흐름]
+레파지토리(이미지(서비스))→다운로드→컨테이너→서비스
+[도커의 목표]
+
+1. 저장된 이미지를 사용하는 방법
+2. 사용자 정의 이미지를 저장하는 방법
+*보통 1번 중심으로 이야기
+쿠버네이트(2014)
+도커(go)를 관리하기 위한 기술
+어떻게 효율적으로 배치, 관리할 것인가
+
+[기존 방법]
+1. 프로그램 언어(안전x):python, java
+-> 잘 사용X
+2. google 제공 툴:쿠버네이트(go)
+[도커의 내부적 구성]
+클라이언트와 호스트
+*docker run: 가장 일반적인 명령어
+
+클라이언트에서 명령어 실행시 호스트는 실행에 따라 이미지를 저장하고 실행된 결과를 클라이언트에게 전달
+(client: docker, host: docker server)
+따라서 두가지 명령으로 구성된다고 할 수 있다.
+[도커의 상태 확인]
+터미널 실행 후
+$sudo systemctl status docker
+$sudo docker info
+마소캠퍼스 TA님이 모두에게:  08:14 PM
+https://hub.docker.com
+*ubuntu 이미지 갖고오기
+위 링크에서 ubuntu 검색-cpu에 따라 선택(스크롤하여 상태 확인 가능)
+[가상머신으로 되돌아와서]
+sudo docker run --help
+*도움말(암호 입력 필수)
+[도커 실행을 원할 경우]
+sudo docker run 옵션 이미지명(이미지:latest)
+=> 최신버전의 이미지를 가져오기
+우분투의 경우
+sudo docker run ubuntu:latest
+상단의 경우: 실행
+
+하단의 경우: 상태
+sudo docker container --help
+: 컨테이너 도움말
+sudo docker container ls
+: 컨테이너에 대한 list 출력
+sudo docker container ls -a
+: 숨겨진 것까지 모두 출력
+=> 실행 중지(exit)까지 출력합니다.
+[컨테이너 상태]
+sudo docker ps : 실행중
+sudo doker ps -a : 실행 정지까지 출력
+sudo docker images
+: 다운로드된 이미지 목록 출력
+김대균님이 모두에게:  08:16 PM
+(질문)
+docker run 수행시 기본 로컬 rep에서 찾고 없으면 docker hub에 옵션에 따라 찾아 다운로드 하는데..
+
+여기서 말한 기본 로컬 rep가 어딘가요? 현재 경로인가요?
+그리고 별도 rep 설정하는 방법(특정 경로나, Git Hub)과 그렇게 설정되었을때 run 수행 옵션좀 알려주세요.
+
+마소캠퍼스 TA님이 모두에게:  08:28 PM
+[sudo 없이 명령 사용]
+sudo usermod -aG docker $USER
+
+*이후 리부팅
+cd docker로 이동하여
+docker images 실행하면 정상 작동(이미지 출력)
+docker ps -a 
+: 컨테이너를 실행 중지된 것도 포함하여 출력
+docker run --name ubuntu1 ubuntu:latest
+: ubuntu라는 이미지를 ubuntu1이라는 컨테이너로 생성
+docker ps -a
+:아까 생성한 ubuntu1이라는 이름의 컨테이너가 생성되었으나 실행중지(exit)인 것을 확인할 수 있다.
+echo "Hello Docker"
+: Hello Docker 출력
+docker run --name ubuntu2 ubuntu:latest echo "Hello Docker"
+: echo 앞을 기점으로 실행되고 이후 echo hello dokcer를 출력, 종료
+docker ps -a
+docker ps
+docker run -it --name ubuntu4 ubuntu:latest
+*i: 인터렉션, t: 터미널 =>상호작용
+결과: 프롬프트가 실행됩니다
+$~ 가 아닌 #~으로 시작
+Masocampus MM님이 모두에게:  08:30 PM
+오늘 강사님 txt 파일도 교재 배포 페이지에 올려놓겠습니다~! 
+마소캠퍼스 TA님이 모두에게:  08:33 PM
+터미널 추가
+docker ps: 실행중인 컨테이너 출력
+docker ps -a
+ubuntu4: 실행중임을 확인
+OS 설치된 내용을 다운로드 받아서 부팅(X)
+사용자가 사용하고있는 ubuntu(=OS)
+- bash shell 실행
+나로부터 모두에게:  08:34 PM
+그럼 ls 명령어 쳤을때 보이는 디렉토리는 현재 저희가 화요일에 설치한 OS 디렉토리인가요?
+아 넵 이해했습니다 감사합니다
+마소캠퍼스 TA님이 모두에게:  08:50 PM
+[프롬프트 exit 후]
+docker ps
+docker ps -a
+ubuntu4가 exit된 것을 확인
+[컨테이너 재시작]
+docker start --help
+:start 도움말
+docker start ubuntu2
+docker start -i ubuntu2
+:출력 결과를 보여줍니다.
+docker start -i ubuntu4
+docker start -i 이미지명
+: 이미지 실행 결과 출력
+docker ps
+[시작과 상호작용을 분리해서 사용하는법]
+docker start ubuntu4
+docker ps 실행
+docker attach --help : 도움말
+docker attach ubuntu4
+ubuntu4 종료후 attach 실행시
+start 후 attach해야한다는 도움말 출력
+docker exec --help: 도움말
+:실행중인 컨테이너에서 명령어 실행
+
+docker exec ubuntu4 echo "Hello Docker"
+에러메시지: running 되고 있지 않기 때문에
+docker start ubuntu4
+docker exec ubuntu4 echo "Hello Docker"
+: 정상 작동
+[명령어 히스토리]
+docker logs --help
+: 컨테이너에 대한 로그와 관련된 도움말
+docker logs ubuntu4: 명령어와 히스토리 출력
+docker ps
+: 4번이 실행중
+종료하려면?
+-> docker stop ubuntu4
+마소캠퍼스 TA님이 모두에게:  09:15 PM
+docker ps -a
+docker rm --help
+docker rm ubuntu4
+docker ps -a
+:ubuntu4 삭제후 삭제된것을 확인
+docker rm ubuntu2
+docker rm ubuntu1
+이런 작업을 반복하여 컨테이너를 모두 없애줍니다
+docker rmi ubuntu
+docker rmi hello-wolrd
+docker info
+docker run -it --name ubuntu1 ubuntu:latest
+docker run -it --name centos1 centos:latest
+unmae -na: 시스템 사양 출력
+*uname -na 입니다
+apt-get update
+:업데이트 명령어
+apt-get install openjdk-8-jdk
+위 apt~ 구문부터 OS container에서 실행
+허기량님이 모두에게:  09:23 PM
+container 간 접속은 어떻게 할까요?
+restful API처럼 서버 클라이언트를 구성해서 연동도 되겠군요.
+쿠버네티스까지 배울수 있겠군요..^^
+아까 쿠버네이트라고 말씀하셨었는데 쿠버네티스라고 부르기보다 쿠버네이트라고 불리나요?
+아.넵.^^
+apt-get 명령어 말고 yum 등 다른 명령어도 사용할수 있나요?
+김대균님이 모두에게:  09:23 PM
+제가 알기로는 이렇게 container단위가 아니라 K8s에서는 pod개념의 서비스로 묶고..거기서 api-gw를 쓰는걸로 압니다.
+마소캠퍼스 TA님이 모두에게:  09:41 PM
+java -version
+1.8.0_265(버전)
+apt-get install vim
+vi HelloWorld.java
+[vi 편집기]
+public class Hello {
+    public static void main(String[] args) {
+        System.out.println("Hello Wlrd");
+    }
+}
+:wq 입력하여 저장
+javac HelloWolrd.java
+java HelloWorld
+https://hub.docker.com/_/openjdk
+exit 
+jre - 실행환경
+jdk - 개발환경
+
+docker run --name jdk8 -it openjdk:8-jdk-slim
+javac -version
+docker run --name jre8 -it openjdk:8-jre-slim
+
+java -version
+docker images
+: jdk 서로 다른 이미지 확인 가능
+김원님이 모두에게:  09:42 PM
+exec 명령어 사용해서 helloworld 만든거 실행해볼수 있나요?
+마소캠퍼스 TA님이 모두에게:  09:43 PM
+1. 파이썬 이미지 설치
+2. 몇버전이 설치되는지 채팅창으로 올려주세요!
+김대균님이 모두에게:  09:44 PM
+기본 Python 3.8.5 (default, Sep  1 2020, 18:44:24)
+버전이네요
+나로부터 모두에게:  09:44 PM
+3.8.5가 설치됩니다
+홍인석님이 모두에게:  09:45 PM
+음.. 저는 3.8.2 설치됐습니다
+김대균님이 모두에게:  09:45 PM
+(질문) 
+openjdk:8-jdk-slim 이미지의 base OS image가 뭔지 확인 하는 방법은 어떤건가요? 
+먼저 TEST했던게 ubuntu 이미지를 통해 컨테이너를 만들어 들어가 java 설치를 한거면..
+openjdk:8-jdk-slim의 base OS가 있다는 건데요... 
+허기량님이 모두에게:  09:47 PM
+3.8.5 설치되었습니다
+정의진님이 모두에게:  09:47 PM
+· 바로 쉘 스크립트 화면 이 안나오게 하려면 - it 만 빼고 만들면 될까요?
+마소캠퍼스 TA님이 모두에게:  09:49 PM
+docker start ubuntu1
+docer exec ubuntu1 java HelloWorld
+*docker exec ubuntu1 java HelloWolrd 입니다
+허기량님이 모두에게:  09:49 PM
+컨테이너에서 실행시키면 약간 느리네요..
+나로부터 모두에게:  09:49 PM
+docker exec ubuntu1 이 실행되어 배쉬가 실행되고 그 후 배쉬에서 java HelloWrold 를입력하는 거라고 생각하면되나요?
+김대균님이 모두에게:  09:51 PM
+만약 jdk 설치한 컨네이너에 추가 패키기지 필요한 경우 base OS 확인 되어야할듯 해서 문의 드린겁니다. ^^
+아니면.. JDK 설치 이미지를 base로 추가 dockerfile을 기반으로 
+추가 패키지를 설정해서. 이미지를 새로 만들어도 되겠군요
+김원님이 모두에게:  09:53 PM
+네 고생하셨습니다
+이정표님이 모두에게:  09:53 PM
+수고하셨습니다

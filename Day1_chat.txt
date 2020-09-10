@@ -1,0 +1,264 @@
+마소캠퍼스 TA님이 모두에게:  06:50 PM
+테스트중입니다.
+Masocampus MM님이 모두에게:  06:54 PM
+55분에 수업에 관해 안내 드리고 수업 시작하도록 하겠습니다
+마소캠퍼스 TA님이 모두에게:  06:57 PM
+교재 사이트입니다~
+www.masocampus.com/ssg-docker101
+비밀번호: docker821
+꼭 한글실명으로 입장부탁드립니다!!
+PC스피커와 웨비나 스피커를 꼭 동일하게 설정해주시고 입장해주세요!
+또한 기본채팅 설정은 모든 토론자 및 참석자으로 부탁드립니다~
+홍인석님이 모두에게:  06:58 PM
+네
+김영은님이 모두에게:  06:58 PM
+네~
+이정표님이 모두에게:  06:58 PM
+네
+안정현님이 모두에게:  06:58 PM
+네
+김민호A님이 모두에게:  06:58 PM
+네
+김지수님이 모두에게:  06:58 PM
+네
+방대승님이 모두에게:  06:58 PM
+네
+나로부터 모두에게:  06:58 PM
+네~
+마소캠퍼스 TA님이 모두에게:  06:59 PM
+교재 사이트입니다~
+www.masocampus.com/ssg-docker101
+비밀번호: docker821
+Masocampus MM님이 모두에게:  06:59 PM
+https://www.masocampus.com/ssg-docker101/
+비밀번호: docker821
+김주희님이 모두에게:  06:59 PM
+유익한 교육 되시기 바랍니다:)
+마소캠퍼스 TA님이 모두에게:  07:02 PM
+실습화면 캡쳐 후
+lecture.pro1@gmail.com 또는
+qna@masocampus.com 으로 문의주세요!
+Masocampus MM님이 모두에게:  07:05 PM
+실습 화면 캡쳐 후 질문은 qna@masocampus.com 으로 문의주세요!
+
+마소캠퍼스 TA님이 모두에게:  07:07 PM
+1~2일차 교재인 도커 기본 과정_v1.pdf 입니다!
+https://www.masocampus.com/ssg-docker101
+비밀번호: docker821
+위사이트에서 다운 받으실수있습니다~
+마소캠퍼스 TA님이 모두에게:  07:19 PM
+https://www.virtualbox.org/
+입니다~
+https://www.vmware.com/kr/
+입니다~
+링크 순서대로
+virtualbox: oracle 무료
+vmware: vmware 유료/무료
+vmware player 15
+*15.5.6 입니다
+재부팅중입니다~!
+이진원님이 모두에게:  07:20 PM
+다운중입니다
+마소캠퍼스 TA님이 모두에게:  07:21 PM
+교재 사이트입니다~
+https://www.masocampus.com/ssg-docker101
+비밀번호: docker821
+허기량님이 모두에게:  07:24 PM
+예전에4.xxx버전이 설치되어있는데 상관있을까요?
+삭제후 재설치해야 하나여?
+업데이트는 안되고 삭제 재설치해야 하네요...ㅜㅜ
+넵
+고맙습니다.^^
+삭제도 시간이 걸리는군요...
+넵 탭으로 듣고있습니다.^^
+마소캠퍼스 TA님이 모두에게:  07:28 PM
+[현재 진행 중]
+vmware 15.5.6을 다운 및 설치 또는 최신 버전으로 업데이트 해주세요!
+*재부팅이 발생하니 원활한 강의 진행을 위하여 별도의 기기로 수강하시길 바랍니다~!
+허기량님이 모두에게:  07:29 PM
+설치가 안되네요. 런처가 실행되다가 중지됩니다
+네
+마소캠퍼스 TA님이 모두에게:  07:29 PM
+*원활한 qna를 위해 채팅 시 꼭 받는 사람을 모든 토론자 및 참석자로 설정해주세요~
+Masocampus MM님이 모두에게:  07:29 PM
+오류 상황 캡쳐하신 후 qna@masocampus.com으로 보내주세요~
+허기량님이 모두에게:  07:30 PM
+아 이미 삭젤 한 후라..
+넵
+나로부터 모두에게:  07:30 PM
+vmware 설치파일 실행시 바로꺼졌는데, administrator 계정으로 설치시 해결됐었습니다
+김도현님이 모두에게:  07:33 PM
+넵
+마소캠퍼스 TA님이 모두에게:  07:35 PM
+네트워크 설정-어댑터 옵션-가상~ 3개가 생성된 것을 확인
+김영은님이 모두에게:  07:35 PM
+virtualBox Host-Only network는 없는데 문제가 있을까요
+마소캠퍼스 TA님이 모두에게:  07:41 PM
+아래 링크에 접속하여 ubuntu 다운!
+https://ubuntu.com/
+(ubuntu Desktop버전)
+
+linux-ubuntu 64bit로 설정
+경로 C:\Virtual Machines\Ubuntu 64-bit
+*C드라이브 밑으로 설정해주세요
+하드디스크 용량은 크게(강사님:12
+*120GB)
+허기량님이 모두에게:  07:42 PM
+6.1.14 버전을 설치해도 될까요? 런처가 안되서 실행파일을 다운로드 바다았습니다
+홈페잊에서 받았습니다
+이윤선님이 모두에게:  07:44 PM
+허기량님은 virtual box 다운로드 받으신거 아닐까요?
+허기량님이 모두에게:  07:44 PM
+런처말고 다운로드받을수있는데는 없을까요?
+맞는데요
+Masocampus MM님이 모두에게:  07:45 PM
+https://www.vmware.com/kr/products/workstation-player/workstation-player-evaluation.html
+허기량님이 모두에게:  07:48 PM
+저url이 player받는데 맞는데요...ㅠㅠ
+네
+실행이 안되요
+안떠서요..
+넵
+나타나싸다가 바로 사라지네여
+ㅎㅎ 그걸 못찾겠네요
+네
+이윤선님이 모두에게:  07:48 PM
+현재 상황을 캡쳐하셔서 QnA 메일로 보내주시면 감사하겠습니다.
+Masocampus MM님이 모두에게:  07:49 PM
+쉬는 시간에 안내드리겠습니다
+허기량님이 모두에게:  07:51 PM
+넵 근데 벌써 세번째 리부팅이라...
+충돌이 계속 나서 설치가 안되네요..ㅠㅠ
+김민호A님이 모두에게:  07:52 PM
+1. cmd 관리자 권한 실행
+2. net user administrator /active:yes
+3. Win+R -> netplwiz  계정 확인
+4. Administrator 계정 접속
+동일 문제 이렇게 해결했습니다.
+아마 실행파일 실행하자마자 꺼지시는 문제인거 같은데..
+허기량님이 모두에게:  07:53 PM
+네
+관리자 계정을 활성화해서 관리자 계정으로 접속하시고 실행하신거네요.
+김민호A님이 모두에게:  07:54 PM
+기존 계정이 관리자였는데 설치파일 종료되어 새로 생성하여 진행하니까 되더라구요
+허기량님이 모두에게:  07:56 PM
+네 바탕화면 설치부터 새로 진행중이라.. 좀 걸릴듯 합니다... 
+설치되는군요 감사합니다..
+김민호A님이 모두에게:  07:56 PM
+넵
+허기량님이 모두에게:  07:57 PM
+저때문에 강의 진행이 늦어져 죄송합니다.~~
+이윤선님이 모두에게:  07:57 PM
+설치 완료되셔서 다행입니다!!
+김민호A님이 모두에게:  08:00 PM
+헛.. 감사합니다.
+마소캠퍼스 TA님이 모두에게:  08:08 PM
+[우분투 데스크탑 설치 과정]
+한국어, ubuntu 설치→next→최소 설치→디스크를 지우고 ubuntu 설치→seoul→
+(예시)
+이름:master
+암호:123456
+→설치 완료
+Masocampus MM님이 모두에게:  08:12 PM
+혹시 라데온 쓰시는 분들은 amd v 지원해서 가상화 설치 가능하대요
+하시다고 정의진님께서 알려주셨습니다~
+정의진님이 모두에게:  08:13 PM
+advanced   ㅡ  cpu configuration ㅡ svm mode enabled 하시면 된대요
+제가 6ㅓㄹ치가 안되더라구욯ㅎ
+김영은2님이 모두에게:  08:26 PM
+VMware에서 계속 ubuntu 설치화면으로 변경이 안됩니다.
+화면 캡쳐를 어디로 보내드리면 될까요?
+마소캠퍼스 TA님이 모두에게:  08:27 PM
+qna@masocampus.com으로 부탁드립니다~!
+마소캠퍼스 TA님이 모두에게:  08:35 PM
+[iso 삽입]
+setting→hardware→cd/DVD→iso파일을 찾아 열기→ 실행
+김영은2님이 모두에게:  08:36 PM
+iso 파일 입력했는데, 안되는거 보니, 수업 끝나고 다시 받아서 해보겠습니다!
+Masocampus MM님이 모두에게:  08:36 PM
+넵 감사합니다
+마소캠퍼스 TA님이 모두에게:  08:47 PM
+Q) 가상머신 내 마우스가 안보인다?
+A)  ctrl+alt 키
+www.docker.com
+[잠깐 살펴본 도커]
+https://www.docker.com/
+하단 developers 카테고래 내 docs 선택
+download and install 선택
+docker for linux 선택
+사이트 하단을 ubuntu를 살펴보시면 꼭 최신 버전으로 업데이트 후 >설치<
+
+*linux 명령어는 생소하실 수 있으니 먼저 찾아보는 것을 추천드립니다!
+[우분투]
+terminal을 실행해주신 후 sudo 명령어 실행
+-> sudo apt-get update (업데이트 명령어) ->암호 입력(안보이는게 정상)
+-> sudo apt-get upgrade 실행
+*진행 시 나오는 질문은 전부 y를 눌러주세요
+김대균님이 모두에게:  09:01 PM
+혹시 저 처럼 PC설치가 문제 있거나 무거운거 싫어하신 분은 저에게 블라섬톡 주세요.
+AWS Fee tier가 허용되는 범위에서 동일 우분트 버전 computing 자원 만들어드릴게요.
+저는 계정 만료되서 내일이나 재가입을 해서 만들어드릴수 있을듯 합니다. putty만 준비하심 됩니다.
+
+마소캠퍼스 TA님이 모두에게:  09:07 PM
+[진행 사항]
+edit-options-가상머신이름을 바꾸기
+virtual machine 디렉토리로 이동하여 기존 ubuntu 폴더를 복사 붙여넣기
+*이때 이름은 다르게 해주세요
+
+open virtual machine-> 복사한 ubuntu를 넣어주세요->이름 바꾸기
+새로 생성한 가상 머신을 실행->copy~ 선택
+결과: 
+기존 가상머신과 똑같은 세팅의 가상머신 생성
+Masocampus MM님이 모두에게:  09:16 PM
+https://docs.microsoft.com/ko-kr/virtualization/hyper-v-on-windows/
+
+https://www.redhat.com/ko/topics/cloud-computing/what-are-cloud-services
+
+마소캠퍼스 TA님이 모두에게:  09:22 PM
+https://www.docker.com/
+하단 developers 카테고래 내 docs 선택
+get started
+마소캠퍼스 TA님이 모두에게:  09:42 PM
+[도커]
+window - 10을 권장
+mac - 추가 설치 필요
+linux - 상대적으로 간단
+
+도커 사이트 하단 developers 카테고래 내 docs 선택 download and install 선택
+os따라 선택:최소 요구사항 필수 확인
+
+우분투
+https://docs.docker.com/engine/install/ubuntu/
+
+[설치]
+가상머신 실행->터미널 실행->
+위 링크 참고하여(우분투)
+set up the repository의 1번항목 명령어 복사 및 붙여넣기 (\는 지우고 한줄로 입력)
+
+*암호 입력후 y를 눌러 진행해주세요
+2번 add docker's official gpg key 코드 복사 붙여넣기
+3번도 위와 같이 반복
+sudo apt-get update를 진행한 후 패키지 설치
+*사이트 순서대로 코드 복사 및 붙여넣기 반복
+
+sudo systemctl status docker
+*active(running) 상태 확인후 q입력
+or sudo service docer status 
+Masocampus MM님이 모두에게:  09:42 PM
+*sudo service docker status 
+
+마소캠퍼스 TA님이 모두에게:  09:52 PM
+sudo docker version
+-> 클라이언트, 서버 2개로 출력 확인
+sudo docker info
+-> 도커 상태 확인
+docker info에서 확인한 docker 위치를 복사하신후  해당 경로로 이동 -> sudo ls -l
+= 도커 파일 확인 가능
+
+도커 명령어 확인
+sudo docer run --help
+sudo docker run hello-world
+-> docker 실행이 정상적으로 실행되는지 확인
+= docker 설명서를 출력시 정상 설치
+sudo docker info
+->동작 중인지 상태값 확인 가능
