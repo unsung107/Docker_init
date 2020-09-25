@@ -18,8 +18,9 @@
 
 1. On-premise : 인프라 아키텍쳐 중심 - 내부적으로 시스템 구성
 2. Off-premise : cloud 중심 - 클라두으 시스템에다가 구성
-   - 보안문제 발생.
-
+   
+- 보안문제 발생.
+   
 1. Monolithic
 
 2. Microservice 

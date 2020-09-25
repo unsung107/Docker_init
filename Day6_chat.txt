@@ -1,0 +1,320 @@
+김병철님이 모두에게:  06:59 PM
+소리가 안들립니다
+Masocampus MM님이 모두에게:  06:59 PM
+제 목소리 안들리시는 분들 채팅창에 남겨주세요!
+주용환님이 모두에게:  07:00 PM
+잘 들립니다.
+마소캠퍼스 TA님이 모두에게:  07:01 PM
+ 기술적인 이슈나 긴급 상황 시
+010 2636 2021 로 부탁드립니다~
+
+교재 사이트입니다~
+https://www.masocampus.com/ssg-docker101
+비밀번호: docker821
+[웨비나 안내사항]
+1. PC스피커와 웨비나 스피커를 동일하게!
+2. 기본채팅설정은 "모든토론자와 참석자"로 변경!
+3. 질문에 10분이상 응답이 없으실 경우 "손들기"
+4. 실습 질문은 화면 캡쳐 후 qna@masocampus.com
+5.  핫라인: 010 2636 2021
+Masocampus MM님이 모두에게:  07:03 PM
+5~6일차 교재 자료 교재 배포 페이지에서
+다운로드 받아주세요~!!
+김병철님이 모두에게:  07:04 PM
+소리잘들립니다
+Masocampus MM님이 모두에게:  07:05 PM
+네 감사합니다~!
+마소캠퍼스 TA님이 모두에게:  07:28 PM
+docker ps
+docker ps -a
+docker rm '모든 컨테이너들'
+docker images
+docker rmi '모든 이미지들'
+-> 초기화 작업 진행
+docekr volume ls
+docker volume rm "volume name 전체"
+docker volume rm $(docker volume ls -qf danglint=true)
+: 현재 돌아가고 있는 volume 삭제
+*danglint -> dangling
+docker run --help
+: link 명령어 참고
+docker run -it --name ubuntu1 ubuntu
+: 컨테이너 생성
+다른 터미널 생성
+docker run -it --link ubuntu1:lubuntul --name ubuntu2 ubuntu
+새로운 터미널 띄우고
+docker ps
+: 컨테이너 확인
+docker inspect -f "{{ .HostsPath }}" ubuntu1
+: 호스트파일 경로 출력
+docker inspect -f "{{ .HostsPath }}" ubuntu2
+경로값 복사하여
+sudo cat "붙여넣기"
+ubuntu1값과 ubuntu2 경로값 cat 차이 확인
+다른 터미널에서
+/# cat /etc/hosts
+
+ubuntu1을 참고하고있는 ubuntu2에서
+/# apt-get update 
+/# apt-get -y install iputils-ping
+/# ping -c 3 lubuntu1
+김대균님이 모두에게:  07:34 PM
+-e 옵셥
+마소캠퍼스 TA님이 모두에게:  07:39 PM
+[maria db까지]
+docker ps -a 
+멈춘 컨테이너만 삭제
+docker run -it -d e MYSQL_ROOT_PASSWORD=123456 --name mariadb1 mariadb
+docker ps
+: maria db 실행 되는지 확인
+
+docker run -it -d --link mariadb1:lmariadb1 --name ubuntu1 ubuntu
+새로운 터미널실행하여 호스트 파일 조회
+docker inspect -f "{{ .HostPath }}" ubuntu1
+sudo cat "경로값"
+: maria db 값 출력
+docker exec -it ubuntu1 /bin/bash
+cat /etc/hosts
+: mariadb값 확인
+
+apt-get update
+apt-get -y install mariadb-client
+:mariadb의 client 접속 도구 설치
+김대균님이 모두에게:  07:41 PM
+(질문요) 그냥 link 옵션 안쓰고 개별 컨테이너 만들어서..  접속할 컨테이너에 직접 hosts파일 수정한거하고 머가 다르나요?  자동 hosts파일에 등록 된는거 말구요
+김병선님이 모두에게:  07:45 PM
+거의 같다고 보시면 됩니다....
+단지 호스트 파일이 외부에 공유되어 있다는 것이지요 ...
+
+김대균님이 모두에게:  07:46 PM
+컨테이너 안의 hosts 파일은 외부 공유는 아닌가요?
+네네
+김병선님이 모두에게:  08:01 PM
+https://mariadb.com/resources/blog/database-master-slave-replication-in-the-cloud/
+마소캠퍼스 TA님이 모두에게:  08:08 PM
+https://mariadb.com/resources/blog/database-master-slave-replication-in-the-cloud
+docker ps
+docker stop "ubuntu id2자리"
+docker rm "ubuntu id"
+docker run -it -d -p 8080:8080 --link mariadb1:mariadb1 --name tomcat1 tomcat
+*docker run -it -d -p 8080:8080 --link mariadb1:lmariadb1 --name tomcat1 tomcat
+
+docker exec -it tomcat1 pwd
+:설치 후 작업 디렉퇴
+*디렉토리
+docker exec -it tomcat1 mkdir -p ./webapps/ROOT/WEB-INF
+vi index.jsp
+Masocampus MM님이 모두에게:  08:09 PM
+pdf 파일 교재 배포 페이지 5~6일차 교재란에 올라가 있습니다~!
+마소캠퍼스 TA님이 모두에게:  08:10 PM
+아래 링크에서 다운받아주세요!
+https://www.masocampus.com/ssg-docker101
+비밀번호: docker821
+김대균님이 모두에게:  08:10 PM
+pdf 문서라서 채팅창에 복사 좀 해주세요
+이정표님이 모두에게:  08:10 PM
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+ out.println( "Hello JSP" );
+%>
+마소캠퍼스 TA님이 모두에게:  08:26 PM
+docker cp ./index.jsp tomcat1:/usr/local/tomcat/webapps/ROOT
+브라우저를 띄우신 후 http://localhost:8080/ 접속
+네트워크 설정 - IP확인
+자기IP주소:8080 과 동일한지 확인
+wget https://downloads.mariadb.com/Connectors/java/connector-java-2.6.2/mariadb-java-client-2.6.2.jar
+-> 5~6일차 교재 참고
+ docker exec -it tomcat1 mkdir -p ./webapps/ROOT/WEB-INF/lib
+docker cp ./mariadb-java-client-2.6.2.jar tomcat1:/usr/local/tomcat/webapps/ROOT/lib
+ vi jdbc.jsp 하여 i 입력후 교재 참고하여 소스 복사 및 붙여넣기
+docker cp ./jdbc.jsp tomcat1:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib
+docker exec -it tomcat1 ls ./webapps/ROOT/
+jsp파일: webapps/ROOT/WEB-INF/ 
+jar파일: webapps/ROOT/WEB-INF/lib
+docker ps
+:tomcat 실행되있을 시 stop 후 start
+김대균님이 모두에게:  08:32 PM
+복사좀 해주세요
+마소캠퍼스 TA님이 모두에게:  08:32 PM
+out.println( "현재시각 : " + rs.getString( "now" ) );
+-> out.println( "현재시각 : " + rs.getString( 1 ) ); 로 코드 정정
+김대균님이 모두에게:  08:32 PM
+네..수정된거요
+김병선님이 모두에게:  08:33 PM
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%@ page import="java.sql.DriverManager" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.SQLException" %>
+
+<%
+	String url = "jdbc:mysql://lmariadb1:3306/mysql";
+	String user = "root";
+	String password = "123456";
+	
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	    
+	try {
+		Class.forName( "org.mariadb.jdbc.Driver" );
+	
+		conn = DriverManager.getConnection( url, user, password );
+	    
+		String sql = "select now()";
+		pstmt = conn.prepareStatement( sql );
+	    
+		rs = pstmt.executeQuery();
+		if( rs.next() ) {
+			out.println( "현재시각 : " + rs.getString( 1 ) );
+		}
+	} catch( ClassNotFoundException e ) {
+		System.out.println( "에러 : " + e.getMessage() );
+	} catch( SQLException e ) {
+		System.out.println( "에러 : " + e.getMessage() );
+	} finally {
+
+		if( rs != null ) rs.close();
+		if( pstmt != null ) pstmt.close();
+		if( conn != null ) conn.close();
+	}
+%>
+마소캠퍼스 TA님이 모두에게:  08:48 PM
+docker network create mynetwork
+docker network ls
+docker run -it -d -e MYSQL_ROOT_PASSWORD=123456 --network mynetwork --name mariadb2 mariadb
+docker run -it -d -p 8081:8080 --name tomcat2 tomcat
+docker exec -it tomcat2 cat /etc/hosts
+docekr exec -it mariadb2 cat /etc/hosts
+docker ps 하여 "tomcat2" stop, rm
+docker run -it -d -p 8081:8080 --network mynetwork --name tomcat2 tomcat
+docker exec -it tomcat2 cat /etc/hosts
+docekr exec -it mariadb2 cat /etc/hosts
+ip 대역 확인
+=>bridge network 방식
+Masocampus MM님이 모두에게:  08:50 PM
+질문: 별도 브릿지 네트워크 만들때 --link 사용은 같이 안되나요?
+
+김병선님이 모두에게:  08:52 PM
+https://docs.docker.com/engine/reference/builder/
+마소캠퍼스 TA님이 모두에게:  09:12 PM
+docker ps 하여 모두 stop
+docker ps -a 모든 컨테이너 rm
+마소캠퍼스 TA님이 모두에게:  09:24 PM
+cd docker/
+mkdir ubuntu01
+cd ubuntu01/
+vi Dockerfile
+
+docker build -tag -t myubuntu1:v0.1
+*docker build -tag -t mybuntu1:v0.1 .
+#Dockerfile 내용#
+
+FROM ubuntu:latest
+MAINTAINER Foo Bar <foo@bar.com>
+
+RUN apt-get update
+RUN apt-get -y install vim
+docker images
+:이미지 확인
+docker run -it --name myubuntu1 mybuntu1:v0.1
+cd ..
+mkdir ubuntu02
+cd ubuntu02/
+vi Dockerfile
+#Dockerfile 내용#
+
+FROM ubuntu:latest
+MAINTAINER Foo Bar <foo@bar.com>
+
+RUN mkdir /data1
+RUN mkdir /data2
+김대균님이 모두에게:  09:24 PM
+FROM MAINTAINER RUN CMD ... 이런거 대소문자 구분할가요?
+마소캠퍼스 TA님이 모두에게:  09:28 PM
+
+FROM ubuntu:latest
+MAINTAINER Foo Bar <foo@bar.com>
+
+RUN mkdir /data
+COPY index.jsp /data
+
+touch index.jsp
+docker build -t myubuntu2:v0.1 .
+
+김병선님이 모두에게:  09:30 PM
+
+FROM ubuntu:latest
+마소캠퍼스 TA님이 모두에게:  09:45 PM
+cd ..
+mkdir ubuntu03
+cd ubuntu03
+vi Dockerfile
+#Dockerfile 내용
+FROM ubuntu:latest
+MAINTAINER Foo Bar <foo@bar.com>
+VOLUME [ "/data" ]
+#esc :wq
+docker build -t myubuntu3:v0.1 .
+docker volume ls
+sudo ls /var/lib/docker/volumes
+docker run -it --name myubuntu3 myubuntu3:v0.1
+터미널 새로 띄우고
+docker volume ls
+sudo ls /var/lib/docker/volumes
+/# exit
+~docker/ubuntu03$ cd 
+docker volume ls
+docker ps -a
+docker rm "컨테이너"
+docker volume ls
+docker volume rm "volume name"
+또는 docker volume rm $(docker volume ls -qf dangling=true)
+sudo rm -rf /var/lib/docker/volumes/data
+sudo rm -rf /var/lib/docker/volumes/"경로값"
+mkdir datas
+docker run -it -v /home/master/datas:/data --name myubuntu3 myubuntu3:v0.1
+touch data/text.txt
+ls data/
+다른 터미널
+ls datas/
+:공유됨을 확인
+김병선님이 모두에게:  09:49 PM
+FROM openjdk:11-jdk-slim
+MAINTAINER Foo Bar <foo@bar.com>
+
+RUN apt-get update
+RUN mkdir -p /usr/share/man/man1
+RUN apt-get -y install tomcat9
+
+RUN mkdir -p /usr/share/tomcat9/conf
+RUN mkdir -p /usr/share/tomcat9/common/classes
+RUN mkdir -p /usr/share/tomcat9/server/classes
+RUN mkdir -p /usr/share/tomcat9/shared/classes
+RUN mkdir -p /usr/share/tomcat9/temp
+
+RUN cp /etc/tomcat9/server.xml /usr/share/tomcat9/conf/
+RUN cp /etc/tomcat9/web.xml /usr/share/tomcat9/conf/
+RUN cp /etc/tomcat9/tomcat-users.xml /usr/share/tomcat9/conf/
+
+EXPOSE 8080
+
+CMD /usr/share/tomcat9/bin/catalina.sh run
+마소캠퍼스 TA님이 모두에게:  09:54 PM
+docker build -t mytomcat1:v0.1 .
+docker images
+docker ps -a
+김대균님이 모두에게:  09:56 PM
+ubuntu@ip-172-31-10-170:~/docker/ubuntu04$ docker run -it --name mytomcat1 mytomcat1:v0.1
+
+네
+허기량님이 모두에게:  09:57 PM
+설치중입니다.
+강사님 네트웍 속도보다 2/3 느리네요..
+김민호A님이 모두에게:  09:57 PM
+docker run -it -d -p 8080:8080 --name mytomcat1 mytomcat1:v0.1
+
+김대균님이 모두에게:  09:58 PM
+expose로 8080했잖아요.. 그건   run -p 8080:8080의 뒷 숫자를 말하는거죠?

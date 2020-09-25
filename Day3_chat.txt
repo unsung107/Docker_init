@@ -1,0 +1,300 @@
+마소캠퍼스 TA님이 모두에게:  07:02 PM
+교재 사이트입니다~
+https://www.masocampus.com/ssg-docker101
+비밀번호: docker821
+[웨비나 안내사항]
+1. PC스피커와 웨비나 스피커를 동일하게!
+2. 기본채팅설정은 "모든토론자와 참석자"로 변경!
+3. 실습 질문은 화면 캡쳐 후 qna@masocampus.com
+4. 기술적인 이슈나 긴급 상황 시
+010 2636 2021 로 부탁드립니다~
+✔️우분투 정상 작동되는지 체크
+✔️터미널 실행
+마소캠퍼스 TA님이 모두에게:  07:22 PM
+[명령어 실행]
+docker ps: 메모리 상에 있는지?
+docker ps -a :모든 컨테이너 확인
+docker rm python1
+docker ps -a 
+docker rm "CONTAINER ID 2자리" (각자 고유값입니다)
+docker ps -a 로 살펴보기
+위 과정을 참고하여 모든 컨테이너를 삭제합니다.
+docker images : 이미지 목록 출력
+[이미지 삭제법]
+docker rmi centos (단, repository명이 하나일때)
+docker rmi openjdk:8-jre-slim (repository:tag)
+docker rmi 11(image id 두자리)
+위를 참고하여 image를 전부 삭제해주세요
+[준비]
+docker images
+docker ps -a 
+두 결과 아무것도 출력되지 않은 상태
+[시스템 설정 참고]
+docker info 시
+: 1. container가 0
+  2. storages dricer: overlay2
+  3. operating system: ubutu
+  4. docker rood dir의 경로 (/var/lib/docker) 
+Masocampus MM님이 모두에게:  07:24 PM
+clear(화면 클리닝)
+마소캠퍼스 TA님이 모두에게:  07:42 PM
+cd /var/lib/docker
+sudo ls -l (관리자 암호 작성)
+-> docker가 설치된 directory입니다.
+*container: 컨테이너 모음
+*image: 받은 이미지 저장
+*overlay2: 변화 생길경우 저장
+
+[폴더 각각 용량 확인]
+sudo du -sh ./ 
+sudo du -sh ./containers
+sudo du -sh ./image
+sudo du -sh /overlay2
+*sudo du -sh ./overlay2
+[이미지 검색]
+1. hub.docker.com (사이트)
+2. docker search (명령어 사용)
+    (ex: docker search ubuntu)
+#이미지 참고
+NAME: "/"가 있는 경우 순수이미지가 아닌 따로 추가되어 업로드 된 파일
+STARS: 다운로드 수
+DESCRIPTION: 세부 설명
+docker search --filter=stars=300 ubuntu
+: 다운로드가 300개 이상인 ubuntu 검색
+[검색 후 다운로드 받기]
+docker pull ubuntu
+docker images : 다운받은 이미지 확인
+[이미지 용량 비교]
+clear
+docker images
+sudo du -sh ./
+sudo du -sh ./containers
+sudo du -sh ./images
+sudo du -sh ./overlay2
+
+docker info
+: images 1개 확인
+clear 
+[docker object의 저레벨수준 정보 출력]
+docker inspect --help
+docker inspect ubuntu
+# 이미지의 설정 상황 참고
+env: 환경 변수
+cmd: 실행되는 환경
+layers: 여러계층, 구성형식
+id, 생성일 등등...
+clear
+sudo ls -l
+sudo ls -l image
+sudo ls -l image/overlay2
+# iamgedb, layerdb...
+default 이미지와 그 위 계층에 관한 정보가 저장
+sudo ls -l image/ocerlay2/imagedb
+sudo ls -l image/overlay2/imagedb/content/sha256
+= 이미지 아이디값 
+마소캠퍼스 TA님이 모두에게:  07:50 PM
+*image/ocerlay2 -> image/overlay2 정정
+clear
+sudo ls -l image/overlay2/layerdb
+sudo ls -l image/overlay2/layerdb/sha256
+: layer에 관한 정보입니다.
+sudo du -sh ./image
+sudo du -sh ./overlay2
+sudo ls -l ./overlay2
+sudo ls -l ./overlay2/l
+=실질적인 데이터가 저장된 곳과 연관
+: 실제 layer에 관한 정보
+sudo ls -R ./overlay2/l/"링크값"
+sudo ls -l ./overlay2/"overlay2 값이 가르키고있는 데이터값"
+홍인석님이 모두에게:  07:57 PM
+layer 등장 후 타이핑을 따라하고 있긴한데 중요한 요점이 어떤건지 궁금합니다
+이미지를 받으면 layer 계층이 생기게 되고
+layer 계층은 단일 또는 복수개로 존재하게 되는건가요?
+김병선님이 모두에게:  08:01 PM
+복수개로 관리됩니다...
+내부적으로 그렇게 됩니다...
+
+많이 알고 계시네요 !!
+데이터베이스의 증분백업과 비슷합니다.
+홍인석님이 모두에게:  08:03 PM
+아하.. 네 이해됐습니다!
+감사합니다
+마소캠퍼스 TA님이 모두에게:  08:25 PM
+sudo ls -l ./overlay2
+sudo ls -l ./overlay2/"sha로 암호화된 값"
+clear
+docker images
+[이미지 삭제 명령어 도움말]
+docker rmi --help 
+docker rmi를 이용하여 모든 이미지를 삭제해주세요
+
+sudo du -sh ./
+용량 확인
+clear
+docker pull ubuntu
+docker create -it ubuntu /bin/bash
+docker ps -a
+=이미지가 생성된 것을 확인
+[container 관련도움말]
+docker container --help
+clear
+docekr container create -it ubuntu2 /bin/vash
+*docker
+* docker container create -it ubuntu /bin/bash
+
+clear 
+sudo ls -l 
+sudo du -sh ./containers
+*기존 용량 비교
+sudo ls -l ./containers
+sudo ls -l ./containers/"위 출력결과인 컨테이너 값"
+clear
+docker ps -a
+docker ps
+docker inspect "컨테이너id 두자리"
+=컨테이너 정보 출력
+#이름을 정확히 알고있다면?
+docker insect "이름"
+docker rm "컨테이너id 두자리"
+docker ps -a
+지워진 것 확인
+docker start -i ubuntu 혹은 컨테이너id 두자리
+#terminal 새로 띄우기
+docker ps -a
+docker ps : 실행중인 것 확인
+마소캠퍼스 TA님이 모두에게:  08:48 PM
+docker start "컨테이너id 두자리"
+docker stop "컨테이너id 두자리"
+->docker ps로 실행/중지를 확인할 수 있다.
+
+도커활용 예
+1. ubuntu+openJDK+apache-Tomcat
+2. openJDK+Apache-Tomcat
+3. Apache-Tomcat
+->custom의 차이
+docker run -it --name tomcat1 -p 8080:8080 openjdk:8-jre-slim /bin/bash
+=tomcat1이라는 컨테이너를 포트 8080을 사용하여 연결
+java -version
+#새 터미널 띄워서
+docker ps -> tomcat1추가된 것 확인
+/# apt-get update
+/# apt-get -y install tomcat8
+*tomcat9
+exit
+docker ps
+docker ps -a
+docker rm tomcat1
+docker images
+docker rmi "지울 컨테이너의id 두자리"
+docker run --name tomcat1 -it -p 8080:8080 openjdk:11-jre-slim /bin/bash
+java -version
+apt-get update
+apt-get -y install tomcat9
+mkdir -p /usr/share/tomcat9/conf
+mkdir -p /usr/share/tomcat9/common/classes
+mkdir -p /usr/share/tomcat9/server/classes
+mkdir -p /usr/share/tomcat9/shared/classes
+mkdir -p /usr/share/tomcat9/temp
+cp /etc/tomcat9/server.xml /usr/share/tomcat9/conf/
+cp /etc/tomcat9/web.xml /usr/share/tomcat9/conf/
+cp /etc/tomcat9/tomcat-users.xml /usr/share/tomcat9/conf/
+ls /usr/share/tomcat9/bin/catalina.sh run
+*ls 제외
+firefox실행 localhost:8080->tomcat 실행 중임을 확인
+마소캠퍼스 TA님이 모두에게:  09:14 PM
+[tomcat 시작 명령어]
+/usr/share/tomcat9/bin/catalina.sh run
+apt-get -y install vim
+mkdir -p /usr/share/tomcat9/webapps/ROOT/WEB-INF
+vi /usr/share/tomcat9/webapps/ROOT/index.jsp
+[vi 편집기 실행]
+<%@ page language="java" contentType="text/html; charset="utf-8" pageEncoding="utf-8"%>
+<%
+	out.println( "Hello JSP" );
+%>
+:wq 저장
+cat /usr/share/tomcat9/webapps/ROOT/index.jsp
+: 파일 내용 확인
+[tomcat9 시작]
+/usr/share/tomcat9/bin/catalina.sh run
+
+firefox를 실행하여 http://localhost:8080 실행
+*에러 정정
+[vi 편집기 실행]
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%
+	out.println( "Hello JSP" );
+%>
+[tomcat 시작] /usr/share/tomcat9/bin/catalina.sh run
+firefox를 실행하여 http://localhost:8080 실행
+
+마소캠퍼스 TA님이 모두에게:  09:34 PM
+https://tomcat.apache.org/download-90.cgi
+-> tar.gz다운시 wget을 통해 다운받아주세요
+*apt-get - instsall wget
+*apt-get -y instsall wget
+
+**install 정정
+exit
+docker search tomcat
+docker ps
+docker ps -a
+나오는 컨테이너는 삭제해주세요
+docker rm ~
+docker run -it -p 8001:8080 --name tomcat1 tomcat:8.5
+
+[포트번호] 8001:8080
+[background 실행 옵션]: -d
+docker run -it -d -p 8002:8080 --name tomcat2 tomcat:8.5
+[firefox로 이동하여]
+localhost:8002
+clear
+docker ps
+docker inspect tomcat2
+-> 이미지+네트워크 설정도 포함된 것을 확인
+-> 경로도 굉장히 복잡하며 tomcap, java 버전, cmd 등 확인
+docker exec -it tomcat2 /bin/bash
+#프롬프트 실행후
+pwd : 현재 경로 확인
+ps -aux | grep tomccat
+*tomcat 정정
+apt-get update
+apt-get -y install vim
+cd /usr/local/tomcat/webapps/ROOT/
+허기량님이 모두에게:  09:34 PM
+루트는 만들어야해요
+마소캠퍼스 TA님이 모두에게:  09:35 PM
+mkdir -p /usr/local/tomcat/webapps/ROOT
+mkdir -p /usr/local/tomcat/webapps/ROOT/WEB-INF
+vi /usr/local/tomcat/webapps/ROOT/index.jsp
+허기량님이 모두에게:  09:38 PM
+index페이지만 만드는 거는 web_inf는 안만들어도 되지 않나요?
+마소캠퍼스 TA님이 모두에게:  09:47 PM
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%
+	out.println( "Hello JSP" );
+%>
+:wq 저장
+[tomcat9 시작]
+/usr/share/tomcat9/bin/catalina.sh run
+firefox를 실행하여 http://localhost:8080 실행
+
+*포트번호 8080->8002
+docker ps 
+docker container ls
+[깜짝 예제]
+1. docker tomcat의 최신버전을 설치하고 몇버전인지 확인해주세요
+나로부터 모두에게:  09:47 PM
+9.0.37 입니다
+김영은님이 모두에게:  09:48 PM
+9.0.37 로 확인됩니다.
+김대균님이 모두에게:  09:48 PM
+  Apache Tomcat/9.0.37
+
+마소캠퍼스 TA님이 모두에게:  09:52 PM
+docker run -it -d -p 8003:8080 --name tomcat3 tomcat:latest
+docker exec -it tomcat3 /bin/bash
+#새로운 터미널
+docker inspect tomcat3
+-> tomcat_Version=9.0.37
+ps -aux | grep tomcat

@@ -1,0 +1,290 @@
+1. 환경설정
+
+1. VMWare - ubuntu => Docker
+
+* ubuntu / Centos => Docker
+
+2. windows 10 Pro(Home)
+	- 가상환경
+		- 리눅스
+	- Hyper V
+	- Docker
+
+Docker
+	Client	= 명령어를 입력하는 기능(cli)
+	Server	= 이미지에 대한 관리(최적화 기능)
+
+	명령어
+		help
+
+		- 실행 관련
+			docker run
+		- 시스템 상태 관련
+			docker ps
+		- 볼륨
+			docker volume
+			docker run
+		- 환경변수
+		- 네트워크
+		- 저장 / 복원
+
+* 시스템 상태 => 운영
+
+초기화
+
+1. 데이터 지우기
+	docker rm
+	docker rmi
+
+2. 시스템 초기화
+master@master-virtual-machine:~$ sudo systemctl stop docker
+master@master-virtual-machine:~$ sudo systemctl status docker
+
+master@master-virtual-machine:~$ sudo rm /etc/docker/daemon.json
+
+master@master-virtual-machine:~$ sudo systemctl start docker
+
+master@master-virtual-machine:~$ sudo systemctl status docker
+master@master-virtual-machine:~$ sudo ls /var/lib/docker/overlay2
+l
+
+* 환경변수
+
+master@master-virtual-machine:~$ env
+master@master-virtual-machine:~$ echo $PATH
+
+master@master-virtual-machine:~$ docker run -it --name ubuntu1 -e ENV1=data1 ubuntu /bin/bash
+master@master-virtual-machine:~$ docker run -it --name ubuntu2 -e ENV1=data1 -e ENV2=data2 ubuntu /bin/bash
+
+* mariadb
+1. ubuntu + mariadb
+
+master@master-virtual-machine:~$ docker run -it --name mariadb1 -p 3306:3306 -e LC_ALL=C.UTF-8 ubuntu /bin/bash
+
+root@c0ebadb30c02:/# apt-get -y install mariadb-client mariadb-server
+
+root@c0ebadb30c02:/# service mysql start
+root@c0ebadb30c02:/# ps -aux | grep mysql
+
+root@c0ebadb30c02:/# mysql
+
+MariaDB [(none)]> select host, user, password from mysql.user;
+MariaDB [(none)]> update mysql.user set plugin='mysql_native_password', password=password('123456') where user='root';
+
+root@c0ebadb30c02:/# service mysql stop
+ * Stopping MariaDB database server mysqld                            [ OK ] 
+
+root@c0ebadb30c02:/# ps -aux | grep mysql
+root        1350  0.0  0.0   5188   736 pts/0    S+   10:42   0:00 grep --color=auto mysql
+
+root@c0ebadb30c02:/# mysql
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+
+root@c0ebadb30c02:/# mysql -u root -p
+Enter password: 
+
+2. mariadb
+
+master@master-virtual-machine:~$ docker search mariadb
+master@master-virtual-machine:~$ docker search --filter "is-official=true" mariadb
+
+https://mariadb.com/kb/en/library/installing-and-using-mariadb-via-docker/
+
+master@master-virtual-machine:~$ docker run -it -p 3306:3306 --name mariadb2 -e MYSQL_ROOT_PASSWORD=123456 -d mariadb
+
+master@master-virtual-machine:~$ docker exec -it mariadb2 /bin/bash
+
+root@36cf20927261:/# mysql
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+
+root@36cf20927261:/# mysql -u root -p
+Enter password: 
+
+* 도커 네트워크
+	- 컨테이너 간의 네트워킹 (IDC)
+
+1. None
+2. Host
+	동일 호스트간의 간단한 테스트
+3. Bridge
+	기본 네트워킹 방법
+4. MACVLAN
+5. Overlay
+
+동일호스트
+	None
+	Host
+	Bridge
+	MACVLAN
+다른호스트
+	MACVLAN
+	Overlay
+
+호스트 상태
+
+master@master-virtual-machine:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+master@master-virtual-machine:~$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+
+master@master-virtual-machine:~$ ifconfig
+master@master-virtual-machine:~$ sudo apt-get -y install net-tools
+master@master-virtual-machine:~$ ifconfig
+
+master@master-virtual-machine:~$ ping 172.17.0.1
+master@master-virtual-machine:~$ docker network ls
+
+master@master-virtual-machine:~$ docker network inspect bridge
+
+master@master-virtual-machine:~$ sudo iptables -t nat -L | more
+
+master@master-virtual-machine:~$ docker run -it --name ubuntu1 ubuntu /bin/bash
+
+1. 새창에서
+master@master-virtual-machine:~$ ifconfig
+
+master@master-virtual-machine:~$ brctl show
+master@master-virtual-machine:~$ sudo apt-get -y install bridge-utils
+
+2. 이전 창에서
+root@5dae9c5b6130:/# apt-get update
+root@5dae9c5b6130:/# apt-get -y install net-tools
+
+root@5dae9c5b6130:/# ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.17.0.2  netmask 255.255.0.0  broadcast 172.17.255.255
+
+*
+docker start -i ubuntu1
+docker start -i ubuntu2
+
+ifconfig
+veth1 - 시작되면 만들어졌다가 꺼지면 없어짐
+
+master@master-virtual-machine:~$ docker inspect ubuntu1
+master@master-virtual-machine:~$ docker inspect ubuntu2
+
+master@master-virtual-machine:~$ docker inspect -f "{{ .NetworkSettings.IPAddress }}" ubuntu1
+172.17.0.2
+master@master-virtual-machine:~$ docker inspect -f "{{ .NetworkSettings.IPAddress }}" ubuntu2
+172.17.0.3
+
+*
+ 
+master@master-virtual-machine:~$ docker run -it -d -p 8080:8080 --name tomcat9 tomcat
+
+master@master-virtual-machine:~$ docker inspect tomcat9
+
+master@master-virtual-machine:~$ docker inspect -f "{{ .NetworkSettings.IPAddress }}" tomcat9
+172.17.0.4
+
+browser
+http://localhost:8080
+http://172.17.0.4:8080
+
+* 새로운 bridge 네트워크
+
+master@master-virtual-machine:~$ docker network ls
+master@master-virtual-machine:~$ docker network --help
+
+master@master-virtual-machine:~$ docker network create --driver bridge mybridge
+master@master-virtual-machine:~$ brctl show
+master@master-virtual-machine:~$ docker network inspect mybridge
+
+master@master-virtual-machine:~$ docker run -it --name ubuntu --net mybridge ubuntu
+
+다른 화면
+master@master-virtual-machine:~$ docker inspect ubuntu
+
+image
+	저장 / 복구
+
+* 컨테이너 아이디( 매번 바뀜 )
+
+master@master-virtual-machine:~$ docker pull ubuntu
+master@master-virtual-machine:~$ docker run -it --name ubuntu1 ubuntu
+	apt-get update
+	apt-get -y install net-tools
+=> 
+master@master-virtual-machine:~$  docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                          PORTS               NAMES
+815eba641f9a        ubuntu              "/bin/bash"         15 minutes ago      Exited (0) 8 minutes ago                            ubuntu1
+
+master@master-virtual-machine:~$ docker commit -a "by tester" 815eba641f9a myubuntu:v0.1
+sha256:01fe7d62d0a9fa3507090d621d22e1c475c47e4f35017300aaa0d100b0cc3384
+
+master@master-virtual-machine:~$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+myubuntu            v0.1                01fe7d62d0a9        9 seconds ago       97.1MB
+ubuntu              latest              bb0eaf4eee00        5 days ago          72.9MB
+
+master@master-virtual-machine:~$ docker run -it --name myubuntu1 myubuntu:v0.1
+root@96e6b29bc34a:/# ifconfig
+
+	apt-get -y install vim
+=> 
+
+master@master-virtual-machine:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                          PORTS               NAMES
+96e6b29bc34a        myubuntu:v0.1       "/bin/bash"         7 minutes ago       Exited (0) About a minute ago                       myubuntu1
+815eba641f9a        ubuntu              "/bin/bash"         15 minutes ago      Exited (0) 8 minutes ago                            ubuntu1
+
+master@master-virtual-machine:~$ docker commit -a "by tester" 96e6b29bc34a  myubuntu:v0.2
+
+master@master-virtual-machine:~$ docker run -it --name myubuntu2 myubuntu:v0.2
+root@96e6b29bc34a:/# vi
+
+master@master-virtual-machine:~$ docker rmi bb
+Error response from daemon: conflict: unable to delete bb0eaf4eee00 (cannot be forced) - image has dependent child images
+
+master@master-virtual-machine:~$ docker save -o backup.tar myubuntu:v0.2
+master@master-virtual-machine:~$ ls
+backup.tar  docker  다운로드  바탕화면  사진  템플릿
+data        공개    문서      비디오    음악
+master@master-virtual-machine:~$ tar tvf backup.tar 
+	vesioning, tar, json
+
+master@master-virtual-machine:~$ docker images
+
+master@master-virtual-machine:~$ docker rmi 28
+
+master@master-virtual-machine:~$ docker load -i backup.tar 
+
+master@master-virtual-machine:~$ docker images
+
+master@master-virtual-machine:~$ docker run -it --name ubuntu myubuntu:v0.2
+root@b0b68de8b078:/# vi
+
+
+이미지를 위한 스크립트 파일 : Dockerfile
+	=> 배치 스크립트 파일
+
+build
+
+FROM	베이스 이미지 이름
+ENV	환경 변수
+
+master@master-virtual-machine:~/images/ubuntu01$ pwd
+/home/master/images/ubuntu01
+
+master@master-virtual-machine:~/images/ubuntu01$ vi Dockerfile
+
+FROM ubuntu:latest
+
+ENV LC_ALL=C.UTF-8
+ENV LANGUAGE=ko
+
+master@master-virtual-machine:~/images/ubuntu01$ docker build -t nubuntu .
+
+
+
+
+
+
+
+
+
+
+
+
+
