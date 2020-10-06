@@ -1,0 +1,190 @@
+Masocampus MM님이 모두에게:  07:00 PM
+안녕하세요
+나로부터 모두에게:  07:00 PM
+안녕하세요
+마소캠퍼스 TA님이 모두에게:  07:07 PM
+[웨비나 안내사항]
+1. PC스피커와 웨비나 스피커를 동일하게!
+2. 기본채팅설정은 "모든토론자와 참석자"로 변경!
+3. 질문은 채팅으로, 10분이상 응답이 없을 경우 "손들기"
+3. 실습 질문은 화면 캡쳐 후 qna@masocampus.com
+4. 기술적인 이슈나 긴급 상황 시
+010 2636 2021 로 부탁드립니다~
+
+[교재 사이트]
+https://www.masocampus.com/ssg-docker101
+비밀번호: docker821
+docker ps / images / volume 을 확인하여
+전부 초기화하기
+mkdir docker
+cd docker
+mkdir tomcat
+cd tomcat
+pwd
+: /home/master/docker/tomcat <- 현재경로
+허기량님이 모두에게:  07:10 PM
+/usr/local/ 에서 l 이 빠졌습니다.
+마소캠퍼스 TA님이 모두에게:  07:14 PM
+vi Dockerfile
+[Docker file 파일 편집]
+FROM openjdk:11-jre-slim
+MAINTAINER Foo Bar <foo@bar.com>
+
+RUN apt-get update
+RUN apt-get -y install wget
+
+WORKDIR /usr/local/
+RUN wget [브라우저에서 tomcat.apache.org로 접속하여 tar.gz 링크를 복사 붙여넣기]
+RUN tar xvzf apache-tomcat-9.0.38.tar.gz
+RUN rm -f apache-tomcat-9.0.38.tar.gz
+
+EXPOSE 8080
+
+CMD /usr/local/apache-tomcat-9.0.38/bin/catalina.sh
+
+[파일 편집 종료 :wq ]
+docker builde -t mytomcat:v0.1 .
+*docker build -t mytomcat:v0.1 .
+마소캠퍼스 TA님이 모두에게:  07:24 PM
+[*dockerfile 수정]: catalina.sh -> catalina.sh run 
+docker images
+docker run -it -d -p 8080:8080 --name tomcat1 mytomcat:v0.1
+curl 127.0.0.1:8080
+마소캠퍼스 TA님이 모두에게:  07:45 PM
+https://github.com/
+프로젝트를 생성한 후 깃주소 복사
+->repository name: dockerfiles
+->Create repository 후 생성된 주소 ex) https://github.com/자신의id/dockerfiles
+
+cd
+git version
+git clone 자신의git주소
+cd dockerfiles/
+mv ../docker/tomcat/ .
+: 경로 /dockerifles/tomcat/Dockerfile이 존재
+git add .
+git config user.email "자신의 메일주소"
+git config user.name "git 내 이름"
+git commit -m "Initial Project Files"
+git push
+: "git id", "암호"
+마소캠퍼스 TA님이 모두에게:  07:52 PM
+https://hub.docker.com
+김민호A님이 모두에게:  08:14 PM
+ubunut -> ubuntu 오타인거 같습니다.
+마소캠퍼스 TA님이 모두에게:  08:15 PM
+->create a Repository
+->repository name: myubuntu
+
+mkdir ubuntu
+cd ubuntu/
+vi Dockerfile
+[Dockerfile 편집]
+FROM ubuntu:latest
+MAINTAINER 자신의id <자신의id@test.com>
+
+RUN apt-get update
+RUN apt-get -y install vim
+
+[파일 편집 종료 :wq]
+
+docker build -t myubuntu:v0.1 .
+마소캠퍼스 TA님이 모두에게:  08:25 PM
+docker images
+docker run -it --name myubuntu myubuntu:v0.1
+
+** docker login/logout/tag/push --help 참고
+
+docker login
+: "username", "암호" 입력
+docker images
+docker tag myubuntu:v0.1 자신의id/myubuntu:v0.1
+docker images
+: 이미지 id가 동일한 이미지가 생성된 것을 확인
+docker push 자신의id/myubuntu
+마소캠퍼스 TA님이 모두에게:  08:34 PM
+docker images
+-> myubuntu와 관련된 컨테이너/이미지 삭제
+docker pull 자신의id/myubuntu:v0.1
+docker run -it --name myubuntu 자신의id/myubuntu:v0.1
+vi 
+:q
+박준서님이 모두에게:  08:37 PM
+[질문]
+개인 레포지토리에서도 latest를 쓸 수 있을까요
+넵
+김대균님이 모두에게:  08:44 PM
+(질문) tag를 안하고.. 원본 이미지를 바로 push는 못하나요?
+마소캠퍼스 TA님이 모두에게:  08:46 PM
+docker tag tomcat:v0.1 자신의id/myubunt:latest
+docker images
+docker push 자신의id/mytomcat
+마소캠퍼스 TA님이 모두에게:  09:09 PM
+docker pull registry
+docker images
+docker run -it -d -p 5000:5000 --name docker-registry registry
+docker ps -a
+docker pull hello-world
+docker images
+김대균님이 모두에게:  09:15 PM
+run -p 80:5000으로 했는데요.. AWS secure group 때문에요.. tag 할때 localhost 포트 멀로해야하나요
+아뇨.. 80만 열려있어서요..
+잘안되더라구요
+잘 안되더라구요.. 콘솔에서..제가 잘못한건지
+여하튼 tag할때 localhost 5000은 run할때  앞인가요? 뒤인가요?
+아는데요.. 안되서요..
+ubuntu@ip-172-31-10-170:~/dockerfiles/ubuntu$ docker tag hello-world localhost:5000/hello-world
+ubuntu@ip-172-31-10-170:~/dockerfiles/ubuntu$ docker images
+REPOSITORY                   TAG                 IMAGE ID            CREATED             SIZE
+registry                     latest              2d4f4b5309b1        3 months ago        26.2MB
+hello-world                  latest              bf756fb1ae65        9 months ago        13.3kB
+localhost:5000/hello-world   latest              bf756fb1ae65        9 months ago        13.3kB
+ubuntu@ip-172-31-10-170:~/dockerfiles/ubuntu$ docker push localhost:5000/hello-world
+The push refers to repository [localhost:5000/hello-world]
+Get http://localhost:5000/v2/: dial tcp 127.0.0.1:5000: connect: connection refused
+
+아거 안되네요
+마소캠퍼스 TA님이 모두에게:  09:20 PM
+curl -X GET http://localhost:5000/v2/_catalog
+curl -X GET http://localhost:5000/v2/hello-world/tags/list
+docker exec -it docker-registry ls /var/lib/registry/docker
+docker exec -it docker-registry ls /var/lib/registry/docker/registry
+docker exec -it docker-registry ls /var/lib/registry/docker/registry/v2
+docker exec -it docker-registry ls /var/lib/registry/docker/registry/v2/repositories
+docker exec -it docker-registry ls /var/lib/registry/docker/registry/v2/repositories/hello-world
+마소캠퍼스 TA님이 모두에게:  09:27 PM
+cd dockerfiles/
+mkdir nginx
+cd nginx/
+vi Dockerfile
+[Dockerfile 편집]
+FROM ubuntu:latest
+MAINTAINER Foo Bar <foo@bar.com>
+
+RUN apt-get update
+RUN apt-get -y install nginx
+
+WORKDIR /etc/nginx
+EXPOSE 80
+
+CMD [ "nginx", "-g", "daemon off;" ]
+
+[편집 완료]
+
+docker build -t registry-nginx
+마소캠퍼스 TA님이 모두에게:  09:39 PM
+
+docker images
+docker image push localhst:5000/registry-nginx
+curl -X GET http://localhost:5000/v2/_catalog
+curl -X GET http://localhost:5000/v2/registry-nginx/tags/list
+docker images
+: registry를 제외하고 다 삭제
+docker ps
+docker image pull localhost:5000/registry-nginx
+docker images
+docker run -it -d -p 80:80 --name nginx1 localhost:5000/registry-nginx:latest
+curl 127.0.0.1:80
+마소캠퍼스 TA님이 모두에게:  09:52 PM
+mkdir registry_data
+docker run -it -d -p 5000:5000 -v /home/master/registry_data:/var/lib/registry/docker/registry/v2 --name docker-registry registry
