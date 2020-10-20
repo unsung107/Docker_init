@@ -1,0 +1,67 @@
+1. 설치
+	기본업데이트
+2. 업데이트
+	terminal
+
+	sudo apt-get update
+	master의 암호 : (보이지 않음)
+
+	sudo apt-get upgrade
+	y
+
+* 리눅스
+
+chroot
+	- 가상 디렉토리 구조
+LXC - LinuX Container
+	LXD
+	LXC
+	OpenVZ
+	Virtuozzo
+	docker
+
+클라우드 서비스 (레드햇)
+
+ㅈindows  10 - Hyper-V - docker
+	window 7 - docker tools + virtual box
+
+
+네트워크 관리자
+	시스템 관리자
+	데이터 베이스 관리자
+	개발자
+
+	=> 시스템 통합 정책
+	=> 확장성 / 융통성
+
+docker
+	1. windows 10
+	2. mac
+		* 추가적인 설치 ...
+	3. linux(LXC)
+		설치
+
+sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent  software-properties-common
+
+sudo	- 관리자 권한
+	로그인 암호
+apt-get 	- 인스톨 명령어
+
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+도커 클라이언트(cli)
+도커 서버(deamon - status)
+
+google -> go
+
+docker
+Community Editon(CE)	- 무료
+Enterprise Edition(EE)	- 유료(AS 정책)
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+전가상화
+반가상화
+docker 설치 / 확인
+
+

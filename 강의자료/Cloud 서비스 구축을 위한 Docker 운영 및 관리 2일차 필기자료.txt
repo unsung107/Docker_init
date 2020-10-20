@@ -1,0 +1,160 @@
+개발팀 개발환경 구성
+
+1. 시스템 구성
+	통합 / 분산
+2. 서비스 구성
+	테스트 / 빌드 / 배포
+
+방법론(개발 문화)
+
+1.
+	On-premise	- infra
+		- 내부적으로 시스템 구성
+	Off-premise	- cloud
+		- 클라우드 시스템 (AWS)
+
+	* 보안문제
+
+	=> Hybrid
+2.
+	Monolithic
+	Microservice - AWS
+		https://aws.amazon.com/ko/microservices/
+
+*
+	https://blog.dreamfactory.com/microservices-examples/
+	
+	1. 대규모
+	2. 연구기간(다양한 시도)
+	+> 1년 이상 연구
+
+	우아한 형제들 블로그
+	https://woowabros.github.io/experience/2018/03/13/k8s-test.html
+	https://woowabros.github.io/r&d/2017/06/13/apigateway.html
+
+	라인 엔지니어 블로그
+	https://engineering.linecorp.com/ko/blog/building-large-kubernetes-cluster/
+
+* 쿠버네이트(2014)
+	도커(go ; 2012)를 관리하기 위한 기술
+	1. 프로그램 언어(python, Java)
+	2. google 제공한 툴 쿠버네이트(go)
+
+* API Gateway
+	클라이언트 앱 - API Gateway - 마이크로 서비스
+
+* 도커
+	마이크로서비스를 위한 구성
+	=> LXC + 마이크로 서비스
+		=> libcontainer +  마이크로 서비스
+
+	레파지토리(이미지(서비스)) -> 다운로드 -> 컨테이너 -> 서비스
+
+	1. 저장된 이미지를 사용하는 방법 (O)
+	2. 사용자 정의 이미지를 저장하는 방법 (X)
+	* 프로그램 언어(python, Java)
+
+* 도커의 상태 확인
+master@master-virtual-machine:~$ sudo systemctl status docker
+master@master-virtual-machine:~$ sudo docker info
+
+* 도커 허브
+https://hub.docker.com
+
+실행
+sudo docker run --help
+sudo docker run 옵션 이미지명(이미지:latest)
+sudo docker run ubuntu:latest
+
+상태
+sudo docker container --help
+sudo docker container ls	실행중
+	sudo docker ps
+sudo docker container ls -a	전체
+	sudo docker ps -a
+
+이미지
+sudo docker images --help
+sudo docker images
+
+sudo 없이 명령주기
+sudo usermod -aG docker $USER
+* 리부팅
+
+docker run --name ubuntu1 ubuntu:latest
+
+docker run --name ubuntu2 ubuntu:latest echo "Hello Docker"
+docker run -it --name ubuntu4 ubuntu:latest
+
+-> OS가 설치된 내용을 다운로드 받아서 부팅 (X)
+-> ubuntu(OS) - bash shell 실행
+-> pstree
+
+재시작
+docker start --help
+docker start -i 이미지명
+
+입출력 연결
+docker attach --help
+docker attach 이미지명
+
+명령어 실행
+docker exec --help
+
+명령어 히스토리
+docker logs --help
+
+컨테이너 종료
+docker stop --help
+
+컨테이너 삭제
+docker rm --help
+
+도커 컨테이너는 다양한 os
+ubuntu
+centos
+
+docker run -it --name ubuntu1 ubuntu:latest
+docker run -it --name centos1 centos:latest
+
+uname -na 실행
+
+OS Container
+1. apt-get update
+2. java -version
+3. apt-get install openjdk-8-jdk
+4. java -version
+5. javac -version
+
+apt-get install vim
+
+vi HelloWorld.java
+
+public class HelloWorld {
+        public static void main(String[] args) {
+                System.out.println("Hello World");
+        }
+}
+
+root@65f78bdcafc8:/# javac HelloWorld.java 
+root@65f78bdcafc8:/# java HelloWorld 
+Hello World
+
+*
+	jre - 실행환경
+	jdk - 개발환경
+
+docker run --name jdk8 -it openjdk:8-jdk-slim
+docker run --name jre8 -it openjdk:8-jre-slim
+oot@5776f0ddb975:/# java -version
+openjdk version "1.8.0_265"
+OpenJDK Runtime Environment (build 1.8.0_265-b01)
+OpenJDK 64-Bit Server VM (build 25.265-b01, mixed mode)
+root@5776f0ddb975:/# javac -version
+bash: javac: command not found
+
+docker start ubuntu1
+docker exec ubuntu1 java HelloWorld
+
+
+

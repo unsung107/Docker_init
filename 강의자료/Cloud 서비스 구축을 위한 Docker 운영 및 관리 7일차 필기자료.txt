@@ -1,0 +1,262 @@
+master@master-virtual-machine:~$ mkdir docker
+master@master-virtual-machine:~$ cd docker
+master@master-virtual-machine:~/docker$ mkdir tomcat
+master@master-virtual-machine:~/docker$ cd tomcat
+master@master-virtual-machine:~/docker/tomcat$ pwd
+/home/master/docker/tomcat
+
+master@master-virtual-machine:~/docker/tomcat$ vi Dockerfile
+----------------------------------------------------------------------------------------------------
+FROM openjdk:11-jre-slim
+MAINTAINER Foo Bar <foo@bar.com>
+
+RUN apt-get update
+RUN apt-get -y install wget
+
+WORKDIR /usr/local/
+RUN wget http://mirror.navercorp.com/apache/tomcat/tomcat-9/v9.0.38/bin/apache-tomcat-9.0.38.tar.gz
+RUN tar xvzf apache-tomcat-9.0.38.tar.gz
+RUN rm  -f apache-tomcat-9.0.38.tar.gz
+
+EXPOSE 8080
+
+CMD /usr/local/apache-tomcat-9.0.38/bin/catalina.sh run
+----------------------------------------------------------------------------------------------------
+
+master@master-virtual-machine:~/docker/tomcat$ docker build -t mytomcat:v0.1 .
+
+master@master-virtual-machine:~/docker/tomcat$ docker images
+
+master@master-virtual-machine:~/docker/tomcat$ docker run -it -d -p 8080:8080 --name tomcat1 mytomcat:v0.1
+
+* 확인
+master@master-virtual-machine:~/docker/tomcat$ curl 127.0.0.1:8080
+브라우저
+직접 접속해서 디렉토리 파악
+
+----------------------------------------------------------------------------------------------------
+
+* github
+	https://github.com/
+
+회원가입
+로그인
+프로젝트
+	프로젝트명 : dockerfiles
+	설명 : 필요한 내용
+	=> https://github.com/아이디/프로젝트명.git
+
+master@master-virtual-machine:~$ git clone https://github.com/lecturepro/dockerfiles.git
+'dockerfiles'에 복제합니다...
+warning: 빈 저장소를 복제한 것처럼 보입니다.
+master@master-virtual-machine:~$ ls
+docker       index.jsp  mariadb-java-client-2.6.2.jar  다운로드  바탕화면  사진  템플릿
+dockerfiles  jdbc.jsp   공개                           문서      비디오    음악
+master@master-virtual-machine:~$ cd dockerfiles/
+master@master-virtual-machine:~/dockerfiles$ mv ../docker/tomcat/ .
+master@master-virtual-machine:~/dockerfiles$ ls
+tomcat
+master@master-virtual-machine:~/dockerfiles$ ls tomcat/
+
+master@master-virtual-machine:~/dockerfiles$ git add .
+master@master-virtual-machine:~/dockerfiles$ git config user.email "lecture.pro1@gmail.com"
+master@master-virtual-machine:~/dockerfiles$ git config user.name "lecturepro"
+master@master-virtual-machine:~/dockerfiles$ git commit -m "Initial Project Files"
+[master (최상위-커밋) 1b465df] Initial Project Files
+ 1 file changed, 14 insertions(+)
+ create mode 100644 tomcat/Dockerfile
+master@master-virtual-machine:~/dockerfiles$ git push
+Username for 'https://github.com': lecture.pro1@gmail.com
+Password for 'https://lecture.pro1@gmail.com@github.com': 
+remote: Invalid username or password.
+fatal: Authentication failed for 'https://github.com/lecturepro/dockerfiles.git/'
+master@master-virtual-machine:~/dockerfiles$ git push
+Username for 'https://github.com': lecture.pro1@gmail.com
+Password for 'https://lecture.pro1@gmail.com@github.com': 
+오브젝트 나열하는 중: 4, 완료.
+오브젝트 개수 세는 중: 100% (4/4), 완료.
+Delta compression using up to 2 threads
+오브젝트 압축하는 중: 100% (2/2), 완료.
+오브젝트 쓰는 중: 100% (4/4), 487 bytes | 487.00 KiB/s, 완료.
+Total 4 (delta 0), reused 0 (delta 0)
+To https://github.com/lecturepro/dockerfiles.git
+ * [new branch]      master -> master
+
+관리하는 기법
+
+dockerfile
+	github
+image
+	public
+		도커 허브
+		* private
+
+		https://hub.docker.com
+
+	private
+		private registry
+		https://docs.docker.com/registry/
+
+master@master-virtual-machine:~/docker/tomcat$ docker build -t mytomcat:v0.1 .
+
+이미지의 이름 = 프로젝트명
+	mytomcat
+	myubuntu 
+
+master@master-virtual-machine:~/dockerfiles$ mkdir ubuntu
+
+master@master-virtual-machine:~/dockerfiles$ cd ubuntu/
+
+master@master-virtual-machine:~/dockerfiles/ubuntu$ vi Dockerfile
+----------------------------------------------------------------------------------------------
+FROM ubuntu:latest
+MAINTAINER neorati <neorati@test.com>
+
+RUN apt-get update
+RUN apt-get -y install vim
+----------------------------------------------------------------------------------------------
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+mytomcat            v0.1                91b6db5e4e42        49 minutes ago      251MB
+openjdk             11-jre-slim         a982abd9eead        3 weeks ago         204MB
+
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker build -t myubuntu:v0.1 .
+
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+myubuntu            v0.1                af85f4558f5d        3 seconds ago       165MB
+mytomcat            v0.1                91b6db5e4e42        52 minutes ago      251MB
+ubuntu              latest              9140108b62dc        10 days ago         72.9MB
+openjdk             11-jre-slim         a982abd9eead        3 weeks ago         204MB
+
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker run -it --name myubuntu myubuntu:v0.1
+root@d4e6adc73902:/# vi
+
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker login --help
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker logout --help
+
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker tag --help
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker push --help
+
+--------------------------------------------------------------------------------------------------------------
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker login
+
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker tag myubuntu:v0.1 neorati/myubuntu:v0.1
+
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker push neorati/myubuntu
+
+* myubuntu와 관련된 container / image 삭제
+
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+mytomcat            v0.1                91b6db5e4e42        About an hour ago   251MB
+openjdk             11-jre-slim         a982abd9eead        3 weeks ago         204MB
+
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker pull neorati/myubuntu:v0.1
+
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+neorati/myubuntu    v0.1                af85f4558f5d        15 minutes ago      165MB
+mytomcat            v0.1                91b6db5e4e42        About an hour ago   251MB
+openjdk             11-jre-slim         a982abd9eead        3 weeks ago         204MB
+
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker run -it --name myubuntu neorati/myubuntu:v0.1
+root@a9d594c1ff54:/# vi
+
+--------------------------------------------------------------------------------------------------------------------
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker tag mytomcat:v0.1 neorati/mytomcat:latest
+
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker images
+
+master@master-virtual-machine:~/dockerfiles/ubuntu$ docker push neorati/mytomcat
+----------------------------------------------------------------------------------------------------------------------
+
+master@master-virtual-machine:~$ docker pull registry
+
+master@master-virtual-machine:~$ docker images
+master@master-virtual-machine:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+b891028afcc7        registry            "/entrypoint.sh /etc…"   11 seconds ago      Up 9 seconds        0.0.0.0:5000->5000/tcp   docker-registry
+
+master@master-virtual-machine:~$ docker pull hello-world
+master@master-virtual-machine:~$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+registry            latest              2d4f4b5309b1        3 months ago        26.2MB
+hello-world         latest              bf756fb1ae65        9 months ago        13.3kB
+
+master@master-virtual-machine:~$ docker tag hello-world localhost:5000/hello-world
+master@master-virtual-machine:~$ docker images
+master@master-virtual-machine:~$ docker push localhost:5000/hello-world
+
+master@master-virtual-machine:~$ curl -X GET http://localhost:5000/v2/_catalog
+{"repositories":["hello-world"]}
+master@master-virtual-machine:~$ curl -X GET http://localhost:5000/v2/hello-world/tags/list
+{"name":"hello-world","tags":["latest"]}
+master@master-virtual-machine:~$ docker exec -it docker-registry ls /var/lib/registry/docker
+registry
+
+master@master-virtual-machine:~$ docker exec -it docker-registry ls /var/lib/registry/docker/registry/v2/repositories/hello-world
+_layers     _manifests  _uploads
+
+master@master-virtual-machine:~$ cd dockerfiles/
+master@master-virtual-machine:~/dockerfiles$ mkdir nginx
+master@master-virtual-machine:~/dockerfiles$ cd nginx/
+master@master-virtual-machine:~/dockerfiles/nginx$ vi Dockerfile
+---------------------------------------------------------------------------
+FROM ubuntu:latest
+MAINTAINER Foo Bar <foo@bar.com>
+
+RUN apt-get update
+RUN apt-get -y install nginx
+
+WORKDIR /etc/nginx
+EXPOSE 80
+
+CMD [ "nginx", "-g", "daemon off;" ]
+---------------------------------------------------------------------------
+master@master-virtual-machine:~/dockerfiles/nginx$ docker build -t registry-nginx .
+
+master@master-virtual-machine:~/dockerfiles/nginx$ docker image push localhost:5000/registry-nginx
+
+master@master-virtual-machine:~/dockerfiles/nginx$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+registry            latest              2d4f4b5309b1        3 months ago        26.2MB
+
+master@master-virtual-machine:~/dockerfiles/nginx$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+b891028afcc7        registry            "/entrypoint.sh /etc…"   26 minutes ago      Up 26 minutes       0.0.0.0:5000->5000/tcp   docker-registry
+
+master@master-virtual-machine:~/dockerfiles/nginx$ docker image pull localhost:5000/registry-nginx
+
+master@master-virtual-machine:~/dockerfiles/nginx$ docker images
+
+master@master-virtual-machine:~/dockerfiles/nginx$ docker run -it -d -p 80:80 --name nginx1 localhost:5000/registry-nginx:latest
+d17f647e46d5ba7e34a1696c96068004a1fd8e794403e35e84c75519594a3e54
+
+master@master-virtual-machine:~/dockerfiles/nginx$ curl 127.0.0.1:80
+
+* registry -> 없어지면 -> 저장 이미지 데이터도 삭제됨
+* volume 처리
+	registry container	: /var/lib/registry/docker/registry/v2
+	외부 host 		: /home/master/registry_data
+	
+	=> docker run
+
+---------------------------------	
+$ mkdir registry_data
+
+$ docker run -it -d -p 5000:5000 -v /home/master/registry_data:/var/lib/registry/docker/registry/v2 --name docker-registry registry
+
+
+
+
+
+
+
+
+
+
+
+
+
+

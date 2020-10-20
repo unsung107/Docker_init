@@ -1,0 +1,298 @@
+1. 시스템 구조
+	이미지의 저장 구조...
+	* 도커 이미지
+		- OS - Kernel 빠지다 - Shell
+
+1. 도커 클라이언트
+	cli
+2. 도커 서버
+	데몬으로 실행됨
+
+환경설정	
+master@master-virtual-machine:~$ sudo systemctl status docker (q)
+master@master-virtual-machine:~$ cat /lib/systemd/system/docker.service
+
+1. 도커 클라이언트
+	- 디렉토리 (자료) : /var/lib/docker
+
+	containers	- container
+	image
+		imagedb
+		layerdb		- overlay2
+	overlay2
+		이미지 정보
+		* 증분 백업 (layer)
+
+2. 포트 연결 정보 (단독서버)
+
+jdk -> tomcat
+
+master@master-virtual-machine:~/docker$ docker run --name tomcat1 -it -p 8080:8080 openjdk:11-jdk-slim /bin/bash
+root@bfa35b7b5d14:/# apt-get update
+root@f993e10eea12:/# mkdir -p /usr/share/man/man1 (O)
+root@f993e10eea12:/# apt-get -y install tomcat9
+
+* tar.gz
+
+* tomcat
+
+master@master-virtual-machine:~$ docker system df
+TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE
+Images              4                   3                   1.151GB             509.2MB (44%)
+Containers          4                   0                   51.75MB             51.75MB (100%)
+Local Volumes       0                   0                   0B                  0B
+Build Cache         0                   0                   0B                  0B
+
+* container / image를 지우고 난 이후
+
+master@master-virtual-machine:~$ docker system df
+TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE
+Images              0                   0                   0B                  0B
+Containers          0                   0                   0B                  0B
+Local Volumes       0                   0                   0B                  0B
+Build Cache         0                   0                   0B                  0B
+
+master@master-virtual-machine:~$ docker system info
+= master@master-virtual-machine:~$ docker info
+
+프로세스 정보
+
+master@master-virtual-machine:~$ docker ps
+master@master-virtual-machine:~$ docker ps -a
+=
+master@master-virtual-machine:~$ docker container ls
+master@master-virtual-machine:~$ docker container ls -a
+
+
+master@master-virtual-machine:~$ docker run -it --name ubuntu1 ubuntu /bin/bash
+
+master@master-virtual-machine:~$ docker stats
+CONTAINER ID        NAME                CPU %               MEM USAGE / LIMIT     MEM %               NET I/O             BLOCK I/O           PIDS
+3ac35cc73bf6        ubuntu1             0.00%               2.484MiB / 3.817GiB   0.06%               6.72kB / 0B         4.1kB / 0B 
+
+실시간 정보
+master@master-virtual-machine:~$ top
+ps -aux
+
+
+* apt-get update
+master@master-virtual-machine:~$ docker top ubuntu1
+
+master@master-virtual-machine:~$ docker history ubuntu
+
+명령어 확인
+https://docs.docker.com/engine/reference/commandline/docker/
+
+* 자료 저장 / 공유
+
+docker cp
+
+도커컨테이너 안에서
+
+root@3ac35cc73bf6:/# mkdir data
+root@3ac35cc73bf6:/# echo "Hello Docker 1" > ./data/test1.txt
+root@3ac35cc73bf6:/# ls ./data/
+test1.txt
+
+호스트에서
+master@master-virtual-machine:~$ mkdir data
+master@master-virtual-machine:~$ echo "Hello Docker 2" > ./data/ttest2.txt
+master@master-virtual-machine:~$ ls ./data/
+ttest2.txt
+
+호스트 => 컨테이너 안으로 복사
+master@master-virtual-machine:~$ docker cp ./data/ttest2.txt ubuntu1:/data/
+
+컨테이너 => 호스트로 복사
+master@master-virtual-machine:~$ docker cp ubuntu1:/data/test1.txt ./data/
+master@master-virtual-machine:~$ ls ./data/
+test1.txt  ttest2.txt
+
+마운트 - 디렉토리(Volume)
+https://docs.docker.com/storage/volumes/
+
+*
+master@master-virtual-machine:~$ docker run -it --name ubuntu2 -v /data ubuntu /bin/bash
+root@843b0cc7f055:/# echo "Hello Docker1" > /data/test.txt
+root@843b0cc7f055:/# ls ./data/ 
+test.txt
+
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "7dd2f58c0bfbed0c7674c4951b11259aa233e056b7d1152c8180fb1dfe0f0048",
+                "Source": "/var/lib/docker/volumes/7dd2f58c0bfbed0c7674c4951b11259aa233e056b7d1152c8180fb1dfe0f0048/_data",
+                "Destination": "/data",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+
+master@master-virtual-machine:~$ docker inspect -f '{{.Config.Volumes}}' ubuntu2
+map[/data:{}]
+
+master@master-virtual-machine:~$ docker inspect -f '{{range .Mounts}}{{.Source}}{{end}}' ubuntu2
+/var/lib/docker/volumes/7dd2f58c0bfbed0c7674c4951b11259aa233e056b7d1152c8180fb1dfe0f0048/_data
+
+aster@master-virtual-machine:~$ sudo ls -l /var/lib/docker/volumes/7dd2f58c0bfbed0c7674c4951b11259aa233e056b7d1152c8180fb1dfe0f0048/_data
+[sudo] master의 암호: 
+합계 4
+-rw-r--r-- 1 root root 15  9월 17 20:09 test1.txt
+
+master@master-virtual-machine:~$ sudo touch /var/lib/docker/volumes/7dd2f58c0bfbed0c7674c4951b11259aa233e056b7d1152c8180fb1dfe0f0048/_data/test2.txt
+
+* 정리하기
+
+master@master-virtual-machine:~$ mkdir ./data
+master@master-virtual-machine:~$ touch ./data/test1.txt
+master@master-virtual-machine:~$ ls ./data/
+test1.txt
+
+master@master-virtual-machine:~$ docker run -it -v /home/master/data:/data --name ubuntu21 ubuntu /bin/bash
+root@e4c23178fe24:/# ls ./data/
+test1.txt
+
+master@master-virtual-machine:~$ docker inspect -f '{{range .Mounts}}{{.Source}}{{end}}' ubuntu21
+/home/master/data
+
+root@e4c23178fe24:/# touch ./data/test2.txt
+root@e4c23178fe24:/# ls ./data/
+test1.txt  test2.txt
+
+master@master-virtual-machine:~$ ls ./data/
+test1.txt  test2.txt
+
+master@master-virtual-machine:~$ docker run -it -v /home/master/data:/data --name ubuntu22 ubuntu /bin/bash
+
+* 정리하기
+
+master@master-virtual-machine:~$ docker run -it --name ubuntu11 -v data ubuntu /bin/bash
+root@372fc7be1df6:/# ls 
+bin   data  etc   lib    lib64   media  opt   root  sbin  sys  usr
+boot  dev   home  lib32  libx32  mnt    proc  run   srv   tmp  var
+root@372fc7be1df6:/# echo "Hello Docker 1" > /data/test.txt
+root@372fc7be1df6:/# cat ./data/test.txt 
+Hello Docker 1
+
+master@master-virtual-machine:~$ docker run -it --name ubuntu12 --volumes-from ubuntu11 ubuntu /bin/bash
+root@0a4fd4a7ae46:/# ls /data/
+test.txt
+
+master@master-virtual-machine:~$ docker run -it -v /home/master/data:/data --name ubuntu21 ubuntu /bin/bash
+root@e4c23178fe24:/# ls ./data/
+test1.txt
+
+master@master-virtual-machine:~$ docker inspect -f '{{range .Mounts}}{{.Source}}{{end}}' ubuntu11
+/var/lib/docker/volumes/6410c2d578a9fc7b291d5073bda3d6f865ce4d76316526568eab7d0becaa2a24/_data
+master@master-virtual-machine:~$ docker inspect -f '{{range .Mounts}}{{.Source}}{{end}}' ubuntu12
+/var/lib/docker/volumes/6410c2d578a9fc7b291d5073bda3d6f865ce4d76316526568eab7d0becaa2a24/_data
+
+* 볼륨 생성
+
+master@master-virtual-machine:~$ docker volume create --name data
+
+master@master-virtual-machine:~$ docker volume inspect data
+
+master@master-virtual-machine:~$ sudo ls -l /var/lib/docker/volumes
+
+master@master-virtual-machine:~$ docker run -it -v data:/data --name ubuntu3 ubuntu /bin/bash
+
+master@master-virtual-machine:~$ docker volume inspect data
+[
+    {
+        "CreatedAt": "2020-09-17T21:14:13+09:00",
+        "Driver": "local",
+        "Labels": {},
+        "Mountpoint": "/var/lib/docker/volumes/data/_data",
+        "Name": "data",
+        "Options": {},
+        "Scope": "local"
+    }
+]
+
+master@master-virtual-machine:~$ sudo ls -l /var/lib/docker/volumes/data/_data
+
+* 
+docker run -it -p 8888:8080 --name tomcat9 tomcat
+
+* container
+	mkdir -p /usr/local/tomcat/webapps/ROOT/
+	mkdir -p /usr/local/tomcat/webapps/ROOT/WEB-INF
+	vi /usr/local/tomcat/webapps/ROOT/index.jsp
+
+* browser
+http://localhost:8888/index.jsp
+
+---------------------------------------------------------------------------
+
+* host
+/home/master/website/ROOT
+/home/master/website/ROOT/WEB-INF
+/home/master/website/ROOT/index.jsp
+
+docker run -it -p 8888:8080 -v /home/master/website/ROOT/:/usr/local/tomcat/webapps/ROOT --name tomcat9 tomcat
+*
+docker run -d -it -p 8888:8080 -v /home/master/website/ROOT/:/usr/local/tomcat/webapps/ROOT --name tomcat9 tomcat
+=> background
+
+http://localhost:8888/index.jsp
+
+* Docker Guide
+
+https://www.docker.com/play-with-docker
+
+* 도커 경로 변경
+
+master@master-virtual-machine:~$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+master@master-virtual-machine:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+master@master-virtual-machine:~$ sudo ls -l /var/lib/docker/overlay2
+[sudo] master의 암호: 
+합계 4
+drwx------ 2 root root 4096  9월 17 21:46 l
+
+master@master-virtual-machine:~$ sudo systemctl stop docker
+master@master-virtual-machine:~$ sudo systemctl status docker
+
+master@master-virtual-machine:~$ rm -f ./data/*
+master@master-virtual-machine:~$ ls ./data/
+
+master@master-virtual-machine:~$ sudo vi /etc/docker/daemon.json
+
+{
+    "data-root": "/home/master/data/docker"
+}
+
+master@master-virtual-machine:~$ sudo apt-get -y install vim
+
+master@master-virtual-machine:~$ sudo systemctl start docker
+master@master-virtual-machine:~$ sudo ls -l ./data/docker/
+
+master@master-virtual-machine:~$ docker run -it --name ubuntu1 ubuntu /bin/bash
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

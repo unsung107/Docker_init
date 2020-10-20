@@ -1,0 +1,157 @@
+-  개발팀
+
+시스템 구성
+	통합 / 분산
+서비스 구성
+	테스트 / 빌드 / 배포
+
+=> 운영팀
+
+Devopts
+	- docker -> 쿠버네티스
+		1. system
+		2. 개발언어
+		3. network
+
+docker life cycle - 명령어
+
+master@master-virtual-machine:~$ docker rm 이름
+master@master-virtual-machine:~$ docker rm 컨테이너 아이디(2자리)
+
+master@master-virtual-machine:~$ docker images
+
+master@master-virtual-machine:~$ docker rmi registry:tag
+master@master-virtual-machine:~$ docker rmi 이미지 아이디(2자리)
+
+master@master-virtual-machine:~$ docker info
+
+master@master-virtual-machine:~$ cd /var/lib/docker/
+master@master-virtual-machine:/var/lib/docker$ sudo ls -l
+
+master@master-virtual-machine:/var/lib/docker$ sudo du -sh ./
+452K	./
+master@master-virtual-machine:/var/lib/docker$ sudo du -sh ./containers
+4.0K	./containers
+master@master-virtual-machine:/var/lib/docker$ sudo du -sh ./image
+228K	./image
+master@master-virtual-machine:/var/lib/docker$ sudo du -sh ./overlay2
+8.0K	./overlay2
+
+이미지 검색
+1. hub.docker.com
+2. 명령어
+
+master@master-virtual-machine:/var/lib/docker$ docker search ubuntu
+master@master-virtual-machine:/var/lib/docker$ docker search --filter=stars=300 ubuntu
+
+master@master-virtual-machine:/var/lib/docker$ docker pull ubuntu
+
+master@master-virtual-machine:/var/lib/docker$ sudo du -sh ./
+80M	./
+master@master-virtual-machine:/var/lib/docker$ sudo du -sh ./containers
+4.0K	./containers
+master@master-virtual-machine:/var/lib/docker$ sudo du -sh ./image
+496K	./image
+master@master-virtual-machine:/var/lib/docker$ sudo du -sh ./overlay2
+80M	./overlay2
+
+master@master-virtual-machine:/var/lib/docker$ docker inspect ubuntu
+
+base image
+master@master-virtual-machine:/var/lib/docker$ sudo ls -l image/overlay2/imagedb/content/sha256
+layer
+master@master-virtual-machine:/var/lib/docker$ sudo ls -l image/overlay2/layerdb/sha256
+
+layer (실제)
+master@master-virtual-machine:/var/lib/docker$ sudo ls -l ./overlay2/l
+
+* create
+
+master@master-virtual-machine:/var/lib/docker$ docker create -it ubuntu /bin/bash
+
+master@master-virtual-machine:/var/lib/docker$ docker ps -a
+master@master-virtual-machine:/var/lib/docker$ docker ps
+
+* contain (pull 이후)
+master@master-virtual-machine:/var/lib/docker$ docker container --help
+master@master-virtual-machine:/var/lib/docker$ docker container create -it ubuntu /bin/bash
+
+master@master-virtual-machine:/var/lib/docker$ sudo ls -l
+master@master-virtual-machine:/var/lib/docker$ sudo du -sh ./containers
+master@master-virtual-machine:/var/lib/docker$ sudo ls -l ./containers
+master@master-virtual-machine:/var/lib/docker$ sudo ls -l ./containers/4b18ee1b6c632e52a6068e4a58d475fed3c8a9d67081df8643ffe0e5ced42451
+
+master@master-virtual-machine:/var/lib/docker$ docker inspect 컨테이너 아이디
+master@master-virtual-machine:/var/lib/docker$ docker inspect 이름
+
+도커를 활용한 예
+
+*
+	ubuntu + openJDK
+	openJDK
+
+* JSP - Apache-Tomcat
+
+* Customizing
+* 개발환경
+
+
+1. ubuntu + openJDK + Apache-Tomcat
+2. openJDK + Apache-Tomcat
+3. Apache-Tomcat
+
+* 포트 설정
+
+docker run --name tomcat1 -it -p 8080:8080 openjdk:11-jre-slim /bin/bash
+
+apt-get update
+
+apt-get -y install tomcat9
+
+
+root@bfa35b7b5d14:/# mkdir -p /usr/share/tomcat9/conf
+root@bfa35b7b5d14:/# mkdir -p /usr/share/tomcat9/common/classes
+root@bfa35b7b5d14:/# mkdir -p /usr/share/tomcat9/server/classes
+root@bfa35b7b5d14:/# mkdir -p /usr/share/tomcat9/shared/classes
+root@bfa35b7b5d14:/# mkdir -p /usr/share/tomcat9/temp
+
+root@bfa35b7b5d14:/# cp /etc/tomcat9/server.xml /usr/share/tomcat9/conf/
+root@bfa35b7b5d14:/# cp /etc/tomcat9/web.xml /usr/share/tomcat9/conf/
+root@bfa35b7b5d14:/# cp /etc/tomcat9/tomcat-users.xml /usr/share/tomcat9/conf/
+
+root@bfa35b7b5d14:/# /usr/share/tomcat9/bin/catalina.sh run
+
+root@bfa35b7b5d14:/# apt-get -y install vim
+root@bfa35b7b5d14:/# mkdir -p /usr/share/tomcat9/webapps/ROOT/WEB-INF/
+root@bfa35b7b5d14:/# vi /usr/share/tomcat9/webapps/ROOT/index.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	out.println( "Hello JSP" );
+%>
+
+
+tar.gz
+apt-get -y install wget
+
+foreground
+master@master-virtual-machine:~/docker$ docker run -it -p 8001:8080 --name tomcat1 tomcat:8.5
+
+background
+master@master-virtual-machine:~/docker$ docker run -it -d -p 8002:8080 --name tomcat2 tomcat:8.5
+
+master@master-virtual-machine:~/docker$ docker exec -it tomcat2 /bin/bash
+
+root@cdb727e4e342:/# apt-get update
+root@cdb727e4e342:/# apt-get -y install vim
+
+root@cdb727e4e342:/# mkdir -p /usr/local/tomcat/webapps/ROOT
+root@cdb727e4e342:/# mkdir -p /usr/local/tomcat/webapps/ROOT/WEB-INF
+root@cdb727e4e342:/# vi /usr/local/tomcat/webapps/ROOT/index.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	out.println( "Hello JSP" );
+%>
+
+* docker tomcat 최신버전
+
+ 
